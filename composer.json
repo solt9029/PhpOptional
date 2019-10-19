@@ -1,0 +1,24 @@
+{
+    "name": "solt9029/php-optional",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kenshi Shiode",
+            "email": "atemu1212@yahoo.co.jp"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Solt9029\\PhpOptional\\": "src"
+        }
+    },
+    "include-path": ["src/"],
+    "scripts": {
+        "phpunit": "phpunit"
+    }
+}
