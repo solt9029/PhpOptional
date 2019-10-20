@@ -13,7 +13,7 @@ class Optional
         if (null === $value) {
             throw new Exception('value is null');
         }
-        $optional = new Optional();
+        $optional = new self();
         $optional->value = $value;
 
         return $optional;
@@ -21,7 +21,7 @@ class Optional
 
     public static function empty()
     {
-        $optional = new Optional();
+        $optional = new self();
         $optional->value = null;
 
         return $optional;
@@ -116,6 +116,7 @@ class Optional
         if (null !== $this->value) {
             return $this->value;
         }
+
         throw $exception();
     }
 
