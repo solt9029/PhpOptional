@@ -2,6 +2,7 @@
     "name": "solt9029/php-optional",
     "type": "library",
     "license": "MIT",
+    "description": "",
     "authors": [
         {
             "name": "Kenshi Shiode",
