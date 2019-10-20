@@ -118,4 +118,14 @@ class Optional
         }
         throw $exception();
     }
+
+    public function toString()
+    {
+        $value = $this->value;
+        if (null !== $value) {
+            return "Optional[${value}]";
+        }
+
+        return 'Optional.empty';
+    }
 }

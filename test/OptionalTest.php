@@ -191,4 +191,17 @@ class OptionalTest extends PHPUnit\Framework\TestCase
             throw new Exception('error');
         });
     }
+
+    public function testToStringWhenValueIsNotNull() {
+        $value = 'value';
+        $optional = Optional::of($value);
+        $string = $optional->toString();
+        $this->assertEquals("Optional[${value}]", $string);
+    }
+
+    public function testToStringWhenValueIsNull() {
+        $optional = Optional::empty();
+        $string = $optional->toString();
+        $this->assertEquals("Optional.empty", $string);
+    }
 }
