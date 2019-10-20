@@ -2,7 +2,7 @@
 
 require_once 'vendor/autoload.php';
 
-use Solt9029\PhpOptional\Optional;
+use PhpOptional\Optional;
 
 class OptionalTest extends PHPUnit\Framework\TestCase
 {

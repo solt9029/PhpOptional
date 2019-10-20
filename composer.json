@@ -14,7 +14,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Solt9029\\PhpOptional\\": "src"
+            "PhpOptional\\": "src"
         }
     },
     "include-path": ["src/"],

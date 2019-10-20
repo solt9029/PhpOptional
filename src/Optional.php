@@ -1,6 +1,6 @@
 <?php
 
-namespace Solt9029\PhpOptional;
+namespace PhpOptional;
 
 use Exception;
 
