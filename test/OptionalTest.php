@@ -68,7 +68,7 @@ class OptionalTest extends PHPUnit\Framework\TestCase
 
     public function testIfPresentNotCalled()
     {
-        $optional = Optional::ofNullable(null);
+        $optional = Optional::empty();
         $isCalled = false;
         $optional->ifPresent(function () use (&$isCalled) {
             $isCalled = true;
@@ -82,9 +82,7 @@ class OptionalTest extends PHPUnit\Framework\TestCase
         $optional = $optional->filter(function ($value) {
             return strlen($value) > 0;
         });
-        $this->assertTrue($optional->filter(function ($value) {
-            return strlen($value) > 0;
-        })->isPresent());
+        $this->assertTrue($optional->isPresent());
     }
 
     public function testFilterFalse()
@@ -94,5 +92,103 @@ class OptionalTest extends PHPUnit\Framework\TestCase
             return strlen($value) < 0;
         });
         $this->assertFalse($optional->isPresent());
+    }
+
+    public function testMap()
+    {
+        $optional = Optional::of('value');
+        $optional = $optional->map(function ($value) {
+            return "${value} mapped";
+        });
+        $this->assertEquals('value mapped', $optional->get());
+    }
+
+    public function testMapReturnsOptionalEmpty()
+    {
+        $optional = Optional::empty();
+        $optional = $optional->map(function ($value) {
+            return "${value} mapped";
+        });
+        $this->assertFalse($optional->isPresent());
+    }
+
+    public function testFlatMap()
+    {
+        $optional = Optional::of('value');
+        $optional = $optional->flatMap(function ($value) {
+            return Optional::of("${value} mapped");
+        });
+        $this->assertEquals('value mapped', $optional->get());
+    }
+
+    public function testFlatMapReturnsOptionalEmpty()
+    {
+        $optional = Optional::empty();
+        $optional = $optional->flatMap(function ($value) {
+            return Optional::of("${value} mapped");
+        });
+        $this->assertFalse($optional->isPresent());
+    }
+
+    public function testFlatMapThrowsException()
+    {
+        $this->expectException(Exception::class);
+        $optional = Optional::of('value');
+        $optional->flatMap(function () {
+            return null;
+        });
+    }
+
+    public function testOrElseReturnsValue()
+    {
+        $value = 'value';
+        $optional = Optional::of($value);
+        $this->assertEquals($value, $optional->orElse('else'));
+    }
+
+    public function testOrElseReturnsElse()
+    {
+        $optional = Optional::empty();
+        $else = 'else';
+        $this->assertEquals($else, $optional->orElse($else));
+    }
+
+    public function testOrElseGetReturnsValue()
+    {
+        $value = 'value';
+        $optional = Optional::of($value);
+        $result = $optional->orElseGet(function () {
+            return 'else';
+        });
+        $this->assertEquals($value, $result);
+    }
+
+    public function testOrElseGetReturnsElseGet()
+    {
+        $optional = Optional::empty();
+        $else = 'else';
+        $result = $optional->orElseGet(function () use ($else) {
+            return $else;
+        });
+        $this->assertEquals($else, $result);
+    }
+
+    public function testOrElseThrowReturnsValue()
+    {
+        $value = 'value';
+        $optional = Optional::of($value);
+        $result = $optional->orElseThrow(function () {
+            throw new Exception('error');
+        });
+        $this->assertEquals($value, $result);
+    }
+
+    public function testOrElseThrowThrowsException()
+    {
+        $optional = Optional::empty();
+        $this->expectException(Exception::class);
+        $optional->orElseThrow(function () {
+            throw new Exception('error');
+        });
     }
 }
